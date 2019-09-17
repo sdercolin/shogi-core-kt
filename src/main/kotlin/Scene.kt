@@ -2,14 +2,14 @@ package com.sdercolin.shogicore
 
 data class Scene constructor(val pieces: List<Piece>) {
 
-    fun take(step: Step): Scene {
+    fun take(move: Move): Scene {
         TODO()
     }
 
     val result: GameResult
         get() = TODO()
 
-    fun getPossibleSteps(piece: Piece): List<Step> {
+    fun getPossibleMoves(piece: Piece): List<Move> {
         TODO()
     }
 

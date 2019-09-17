@@ -16,16 +16,16 @@ class Game() {
     val movablePieces: List<Piece>
         get() = currentScene.pieces
             .filter { it.color == currentPlayer.color }
-            .filter { currentScene.getPossibleSteps(it).isNotEmpty() }
+            .filter { currentScene.getPossibleMoves(it).isNotEmpty() }
 
-    fun getPossibleSteps(piece: Piece): List<Step> {
-        return currentScene.getPossibleSteps(piece)
+    fun getPossibleMoves(piece: Piece): List<Move> {
+        return currentScene.getPossibleMoves(piece)
     }
 
-    fun take(step: Step): Scene {
+    fun take(move: Move): Scene {
         currentPlayer =
             if (currentPlayer == firstPlayer) secondPlayer
             else firstPlayer
-        return currentScene.take(step)
+        return currentScene.take(move)
     }
 }
