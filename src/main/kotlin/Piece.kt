@@ -68,9 +68,9 @@ data class Rook(
     override fun getRouteTo(target: Position): List<Position> {
         ensureCanMoveTo(target)
         val route = if (target.x == this.position.x) {
-            (position.y..target.y).map { y -> Position(target.x, y) }
+            (position.y towards target.y).map { y -> Position(target.x, y) }
         } else {
-            (position.x..target.x).map { x -> Position(x, target.y) }
+            (position.x towards target.x).map { x -> Position(x, target.y) }
         }
         return route
             .minus(position)
@@ -99,8 +99,8 @@ data class Dragon(
     override fun getRouteTo(target: Position): List<Position> {
         ensureCanMoveTo(target)
         val route = when {
-            target.x == this.position.x -> (position.y..target.y).map { y -> Position(target.x, y) }
-            target.y == this.position.y -> (position.x..target.x).map { x -> Position(x, target.y) }
+            target.x == this.position.x -> (position.y towards target.y).map { y -> Position(target.x, y) }
+            target.y == this.position.y -> (position.x towards target.x).map { x -> Position(x, target.y) }
             else -> listOf(position, target)
         }
         return route
@@ -123,10 +123,10 @@ data class Bishop(
 
     override fun getRouteTo(target: Position): List<Position> {
         ensureCanMoveTo(target)
-        val xRoute = position.x..target.x
-        val yRoute = position.y..target.y
-        return xRoute
-            .zip(yRoute) { x, y -> Position(x, y) }
+        val xRoute = position.x towards target.x
+        val yRoute = position.y towards target.y
+        return xRoute.zip(yRoute)
+            .map { (x, y) -> Position(x, y) }
             .minus(position)
             .minus(target)
     }
@@ -153,8 +153,8 @@ data class Horse(
     override fun getRouteTo(target: Position): List<Position> {
         ensureCanMoveTo(target)
         if (abs(target.x - position.x) <= 1 && abs(target.y - position.y) <= 1) return listOf()
-        val xRoute = position.x..target.x
-        val yRoute = position.y..target.y
+        val xRoute = position.x towards target.x
+        val yRoute = position.y towards target.y
         return xRoute
             .zip(yRoute) { x, y -> Position(x, y) }
             .minus(position)
@@ -249,7 +249,7 @@ data class Lance(
 
     override fun getRouteTo(target: Position): List<Position> {
         ensureCanMoveTo(target)
-        return (position.y..target.y)
+        return (position.y towards target.y)
             .map { y -> Position(position.x, y) }
             .minus(position)
             .minus(target)
