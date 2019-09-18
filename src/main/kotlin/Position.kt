@@ -10,9 +10,14 @@ data class Position(val x: Int, val y: Int) {
     companion object {
         private const val X_MAX = 8
         private const val Y_MAX = 8
+        private const val WIDTH_PROMOTABLE_ZONE = 3
 
-        val blackHand = Position(-1, 9)
-        val whiteHand = Position(9, -1)
+        fun getHandPosition(color: Color): Position {
+            return when (color) {
+                Color.BLACK -> Position(-1, 9)
+                Color.WHITE -> Position(9, -1)
+            }
+        }
 
         val wholeBoard: List<Position>
             get() =
@@ -21,5 +26,22 @@ data class Position(val x: Int, val y: Int) {
                         Position(x, y)
                     }
                 }
+
+        fun getPromotableZone(color: Color): List<Position> {
+            return when (color) {
+                Color.BLACK ->
+                    (0..X_MAX).flatMap { x ->
+                        (0 until WIDTH_PROMOTABLE_ZONE).map { y ->
+                            Position(x, y)
+                        }
+                    }
+                Color.WHITE ->
+                    (0..X_MAX).flatMap { x ->
+                        (X_MAX - WIDTH_PROMOTABLE_ZONE + 1..X_MAX).map { y ->
+                            Position(x, y)
+                        }
+                    }
+            }
+        }
     }
 }

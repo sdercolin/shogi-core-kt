@@ -18,7 +18,7 @@ class Game() {
             .filter { it.color == currentPlayer.color }
             .filter { currentScene.getPossibleMoves(it).isNotEmpty() }
 
-    fun getPossibleMoves(piece: Piece): List<Move> {
+    fun getPossibleMoves(piece: Piece): List<PossibleMove> {
         return currentScene.getPossibleMoves(piece)
     }
 
