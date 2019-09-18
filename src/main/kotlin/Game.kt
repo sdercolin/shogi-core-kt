@@ -3,10 +3,10 @@ package com.sdercolin.shogicore
 class Game() {
     private val firstPlayer = Player(Color.BLACK)
     private val secondPlayer = Player(Color.WHITE)
-    private val scenes = mutableListOf(Scene.empty)
+    private val records: MutableList<Pair<Scene, Move?>> = mutableListOf(Scene.empty to null)
 
-    val history: List<Scene> = scenes.toList()
-    val currentScene: Scene get() = scenes.last()
+    val history: List<Pair<Scene, Move?>> get() = records.toList()
+    val currentScene: Scene get() = records.last().first
 
     val result: GameResult get() = currentScene.result
 
@@ -28,7 +28,7 @@ class Game() {
             else firstPlayer
 
         return currentScene.take(move).also {
-            scenes.add(it)
+            records.add(it to move)
         }
     }
 }
