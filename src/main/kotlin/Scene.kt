@@ -10,11 +10,19 @@ data class Scene constructor(val pieces: List<Piece>) {
         get() = TODO()
 
     fun getPossibleMoves(piece: Piece): List<PossibleMove> {
-        val movablePositions = piece.movablePositions
-            .filter { getPieceOn(it)?.currentColor != piece.currentColor }
-            .filter { piece.getRouteTo(it).all { position -> getPieceOn(position) == null } }
-        return movablePositions.map { target ->
-            PossibleMove(piece, target, canPromote(piece, target))
+        return if (piece.position.isOnBoard) {
+            val movablePositions = piece.movablePositions
+                .filter { getPieceOn(it)?.currentColor != piece.currentColor }
+                .filter { piece.getRouteTo(it).all { position -> getPieceOn(position) == null } }
+            movablePositions.map { target ->
+                PossibleMove(piece, target, canPromote(piece, target))
+            }
+        } else {
+            val droppablePositions = Position.wholeBoard
+                .filter { getPieceOn(it) == null }
+            droppablePositions.map { target ->
+                PossibleMove(piece, target, canPromote = false)
+            }
         }
     }
 
