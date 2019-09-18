@@ -38,6 +38,9 @@ sealed class Piece(val type: Type) {
     }
 
     protected val upwardFactor get() = if (currentColor == Color.BLACK) -1 else 1
+
+    internal open fun promote(): Piece? = null
+    internal open fun demote(): Piece? = null
 }
 
 data class King(
@@ -76,6 +79,8 @@ data class Rook(
             .minus(position)
             .minus(target)
     }
+
+    override fun promote(): Piece? = Dragon(color, currentColor, position, id)
 }
 
 data class Dragon(
@@ -107,6 +112,8 @@ data class Dragon(
             .minus(position)
             .minus(target)
     }
+
+    override fun demote(): Piece? = Rook(color, currentColor, position, id)
 }
 
 data class Bishop(
@@ -130,6 +137,8 @@ data class Bishop(
             .minus(position)
             .minus(target)
     }
+
+    override fun promote(): Piece? = Horse(color, currentColor, position, id)
 }
 
 data class Horse(
@@ -160,6 +169,8 @@ data class Horse(
             .minus(position)
             .minus(target)
     }
+
+    override fun demote(): Piece? = Bishop(color, currentColor, position, id)
 }
 
 sealed class GoldLike(type: Type) : Piece(type) {
@@ -205,6 +216,8 @@ data class Silver(
                 .distinct()
                 .minus(position)
         }
+
+    override fun promote(): Piece? = PromotedSilver(color, currentColor, position, id)
 }
 
 data class PromotedSilver(
@@ -212,7 +225,10 @@ data class PromotedSilver(
     override val currentColor: Color,
     override val position: Position,
     override val id: Int
-) : GoldLike(P_SILVER)
+) : GoldLike(P_SILVER) {
+
+    override fun demote(): Piece? = Silver(color, currentColor, position, id)
+}
 
 data class Knight(
     override val color: Color,
@@ -226,6 +242,8 @@ data class Knight(
             position + (-1 to 2 * upwardFactor),
             position + (1 to 2 * upwardFactor)
         ).filter { it.isOnBoard }
+
+    override fun promote(): Piece? = PromotedKnight(color, currentColor, position, id)
 }
 
 data class PromotedKnight(
@@ -233,7 +251,10 @@ data class PromotedKnight(
     override val currentColor: Color,
     override val position: Position,
     override val id: Int
-) : GoldLike(P_KNIGHT)
+) : GoldLike(P_KNIGHT) {
+
+    override fun demote(): Piece? = Knight(color, currentColor, position, id)
+}
 
 data class Lance(
     override val color: Color,
@@ -254,6 +275,8 @@ data class Lance(
             .minus(position)
             .minus(target)
     }
+
+    override fun promote(): Piece? = PromotedLance(color, currentColor, position, id)
 }
 
 data class PromotedLance(
@@ -261,7 +284,10 @@ data class PromotedLance(
     override val currentColor: Color,
     override val position: Position,
     override val id: Int
-) : GoldLike(P_LANCE)
+) : GoldLike(P_LANCE) {
+
+    override fun demote(): Piece? = Lance(color, currentColor, position, id)
+}
 
 data class Pawn(
     override val color: Color,
@@ -273,6 +299,8 @@ data class Pawn(
     override val movablePositions: List<Position>
         get() = listOf(position + (0 to 1 * upwardFactor))
             .filter { it.isOnBoard }
+
+    override fun promote(): Piece? = PromotedPawn(color, currentColor, position, id)
 }
 
 data class PromotedPawn(
@@ -280,4 +308,7 @@ data class PromotedPawn(
     override val currentColor: Color,
     override val position: Position,
     override val id: Int
-) : GoldLike(P_PAWN)
+) : GoldLike(P_PAWN) {
+
+    override fun demote(): Piece? = Pawn(color, currentColor, position, id)
+}
