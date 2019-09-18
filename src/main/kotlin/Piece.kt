@@ -1,6 +1,7 @@
 package com.sdercolin.shogicore
 
 import com.sdercolin.shogicore.Piece.Type.*
+import com.sdercolin.shogicore.exception.IllegalPromotionException
 import com.sdercolin.shogicore.exception.UnreachablePositionException
 import kotlin.math.abs
 
@@ -10,21 +11,61 @@ sealed class Piece(val type: Type) {
     abstract val position: Position
     internal abstract val id: Int
 
-    enum class Type {
-        KING, // 王將, 玉將
-        ROOK, // 飛車
-        DRAGON, // 龍王
-        BISHOP, // 角行
-        HORSE, // 龍馬
-        GOLD, // 金將
-        SILVER, // 銀將
-        P_SILVER, // 成銀
-        KNIGHT, // 桂馬
-        P_KNIGHT, // 成桂
-        LANCE, // 香車
-        P_LANCE, // 成香
-        PAWN, // 歩兵
-        P_PAWN, // と金
+    internal fun beTaken(): Piece {
+        val newColor = if (currentColor == Color.BLACK) Color.WHITE else Color.BLACK
+        val handPosition = Position.getHandPosition(newColor)
+        return type.instantiator(color, newColor, handPosition, id)
+    }
+
+    internal fun move(target: Position, promote: Boolean): Piece {
+        val moved = type.instantiator(color, currentColor, position, id)
+        return if (!promote) moved
+        else moved.promote()!!
+    }
+
+    enum class Type(internal val instantiator: (Color, Color, Position, Int) -> Piece) {
+        KING({ color, currentColor, position, id ->
+            King(color, currentColor, position, id)
+        }), // 王將, 玉將
+        ROOK({ color, currentColor, position, id ->
+            Rook(color, currentColor, position, id)
+        }), // 飛車
+        DRAGON({ color, currentColor, position, id ->
+            Dragon(color, currentColor, position, id)
+        }), // 龍王
+        BISHOP({ color, currentColor, position, id ->
+            Bishop(color, currentColor, position, id)
+        }), // 角行
+        HORSE({ color, currentColor, position, id ->
+            Horse(color, currentColor, position, id)
+        }), // 龍馬
+        GOLD({ color, currentColor, position, id ->
+            Gold(color, currentColor, position, id)
+        }), // 金將
+        SILVER({ color, currentColor, position, id ->
+            Silver(color, currentColor, position, id)
+        }), // 銀將
+        P_SILVER({ color, currentColor, position, id ->
+            PromotedSilver(color, currentColor, position, id)
+        }), // 成銀
+        KNIGHT({ color, currentColor, position, id ->
+            Knight(color, currentColor, position, id)
+        }), // 桂馬
+        P_KNIGHT({ color, currentColor, position, id ->
+            PromotedKnight(color, currentColor, position, id)
+        }), // 成桂
+        LANCE({ color, currentColor, position, id ->
+            Lance(color, currentColor, position, id)
+        }), // 香車
+        P_LANCE({ color, currentColor, position, id ->
+            PromotedLance(color, currentColor, position, id)
+        }), // 成香
+        PAWN({ color, currentColor, position, id ->
+            Pawn(color, currentColor, position, id)
+        }), // 歩兵
+        P_PAWN({ color, currentColor, position, id ->
+            PromotedPawn(color, currentColor, position, id)
+        }), // と金
     }
 
     internal abstract val movablePositions: List<Position>

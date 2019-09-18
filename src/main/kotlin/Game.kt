@@ -26,6 +26,9 @@ class Game() {
         currentPlayer =
             if (currentPlayer == firstPlayer) secondPlayer
             else firstPlayer
-        return currentScene.take(move)
+
+        return currentScene.take(move).also {
+            scenes.add(it)
+        }
     }
 }
