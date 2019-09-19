@@ -1,6 +1,9 @@
 package com.sdercolin.shogicore
 
 import com.sdercolin.shogicore.exception.IllegalMoveException
+import com.sdercolin.shogicore.exception.IllegalOnBoardPositionException
+import com.sdercolin.shogicore.exception.IllegalPositionException
+import com.sdercolin.shogicore.exception.PieceNotExistingException
 
 data class Scene constructor(val pieces: List<Piece>) {
 
@@ -33,7 +36,17 @@ data class Scene constructor(val pieces: List<Piece>) {
         throw IllegalMoveException(move)
     }
 
+    fun getPossibleMoves(x: Int, y: Int): List<PossibleMove>? {
+        return getPossibleMoves(Position(x, y))
+    }
+
+    fun getPossibleMoves(position: Position): List<PossibleMove>? {
+        if (!position.isOnBoard) throw IllegalOnBoardPositionException(position)
+        return getPieceOn(position)?.let { getPossibleMoves(it) }
+    }
+
     fun getPossibleMoves(piece: Piece): List<PossibleMove> {
+        if (!pieces.contains(piece)) throw PieceNotExistingException(piece, this)
         return if (piece.position.isOnBoard) {
             val movablePositions = piece.movablePositions
                 .filter { getPieceOn(it)?.currentColor != piece.currentColor }
@@ -55,8 +68,13 @@ data class Scene constructor(val pieces: List<Piece>) {
         return (piece.position in promotableZone || target in promotableZone) && piece.promote() != null
     }
 
-    private fun getPieceOn(position: Position): Piece? {
+    internal fun getPieceOn(position: Position): Piece? {
+        if (!position.isOnBoard) throw IllegalOnBoardPositionException(position)
         return pieces.find { it.position == position }
+    }
+
+    internal fun getPiecesOn(position: Position): List<Piece> {
+        return pieces.filter { it.position == position }
     }
 
     companion object {

@@ -27,6 +27,9 @@ data class Position(val x: Int, val y: Int) {
                     }
                 }
 
+        val all: List<Position>
+            get() = wholeBoard + getHandPosition(Color.BLACK) + getHandPosition(Color.WHITE)
+
         fun getPromotableZone(color: Color): List<Position> {
             return when (color) {
                 Color.BLACK ->
