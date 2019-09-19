@@ -14,11 +14,12 @@ sealed class Piece(val type: Type) {
     internal fun beTaken(): Piece {
         val newColor = if (currentColor == Color.BLACK) Color.WHITE else Color.BLACK
         val handPosition = Position.getHandPosition(newColor)
-        return type.instantiator(color, newColor, handPosition, id)
+        val taken = type.instantiator(color, newColor, handPosition, id)
+        return taken.demote() ?: taken
     }
 
     internal fun move(target: Position, promote: Boolean): Piece {
-        val moved = type.instantiator(color, currentColor, position, id)
+        val moved = type.instantiator(color, currentColor, target, id)
         return if (!promote) moved
         else moved.promote()!!
     }
