@@ -9,13 +9,13 @@ class MoveTest {
         val possibleMoves1 = scene0.getPossibleMoves(6, 6)
         assertEquals(1, possibleMoves1?.size)
 
-        val move1 = possibleMoves1!![0].confirmPromotion(false)
+        val move1 = possibleMoves1!![0].confirm(false)
         val scene1 = scene0.take(move1)
         assertNotNull(scene1.getPieceOn(Position(6, 5)))
 
         val possibleMoves2 = scene1.getPossibleMoves(7, 7)
         assertEquals(5, possibleMoves2?.size)
-        val move2 = possibleMoves2!!.find { it.target == Position(2, 2) }?.confirmPromotion(true)
+        val move2 = possibleMoves2!!.find { it.target == Position(2, 2) }?.confirm(true)
         assertNotNull(move2)
         val scene2 = scene1.take(move2!!)
 

@@ -1,17 +1,23 @@
 package com.sdercolin.shogicore
 
+/**
+ * Representing a point the board or either of player's hand
+ */
 data class Position(val x: Int, val y: Int) {
     val isOnBoard get() = x in 0..X_MAX && y in 0..Y_MAX
 
-    operator fun plus(point: Pair<Int, Int>): Position {
+    internal operator fun plus(point: Pair<Int, Int>): Position {
         return copy(x = x + point.first, y = y + point.second)
     }
 
     companion object {
-        private const val X_MAX = 8
-        private const val Y_MAX = 8
+        const val X_MAX = 8
+        const val Y_MAX = 8
         private const val WIDTH_PROMOTABLE_ZONE = 3
 
+        /**
+         * Returns certain {@code Position} representing the hand of the given color
+         */
         fun getHandPosition(color: Color): Position {
             return when (color) {
                 Color.BLACK -> Position(-1, 9)
@@ -19,6 +25,9 @@ data class Position(val x: Int, val y: Int) {
             }
         }
 
+        /**
+         * A list containing all the {@code Position}s on the board
+         */
         val wholeBoard: List<Position>
             get() =
                 (0..X_MAX).flatMap { x ->
@@ -27,10 +36,13 @@ data class Position(val x: Int, val y: Int) {
                     }
                 }
 
+        /**
+         * A list containing all the existing {@code Position}s
+         */
         val all: List<Position>
             get() = wholeBoard + getHandPosition(Color.BLACK) + getHandPosition(Color.WHITE)
 
-        fun getPromotableZone(color: Color): List<Position> {
+        internal fun getPromotableZone(color: Color): List<Position> {
             return when (color) {
                 Color.BLACK ->
                     (0..X_MAX).flatMap { x ->

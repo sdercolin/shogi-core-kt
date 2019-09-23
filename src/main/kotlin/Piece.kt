@@ -5,6 +5,9 @@ import com.sdercolin.shogicore.exception.IllegalPromotionException
 import com.sdercolin.shogicore.exception.UnreachablePositionException
 import kotlin.math.abs
 
+/**
+ * The base class of all types of pieces
+ */
 sealed class Piece(val type: Type) {
     abstract val color: Color
     abstract val currentColor: Color
@@ -24,49 +27,94 @@ sealed class Piece(val type: Type) {
         else moved.promote()!!
     }
 
+    /**
+     * Type of pieces defined by their functions
+     */
     enum class Type(internal val instantiator: (Color, Color, Position, Int) -> Piece) {
+        /**
+         * 王將, 玉將
+         */
         KING({ color, currentColor, position, id ->
             King(color, currentColor, position, id)
-        }), // 王將, 玉將
+        }),
+        /**
+         * 飛車
+         */
         ROOK({ color, currentColor, position, id ->
             Rook(color, currentColor, position, id)
-        }), // 飛車
+        }),
+        /**
+         * 龍王
+         */
         DRAGON({ color, currentColor, position, id ->
             Dragon(color, currentColor, position, id)
-        }), // 龍王
+        }),
+        /**
+         * 角行
+         */
         BISHOP({ color, currentColor, position, id ->
             Bishop(color, currentColor, position, id)
-        }), // 角行
+        }),
+        /**
+         * 龍馬
+         */
         HORSE({ color, currentColor, position, id ->
             Horse(color, currentColor, position, id)
-        }), // 龍馬
+        }),
+        /**
+         * 金將
+         */
         GOLD({ color, currentColor, position, id ->
             Gold(color, currentColor, position, id)
-        }), // 金將
+        }),
+        /**
+         * 銀將
+         */
         SILVER({ color, currentColor, position, id ->
             Silver(color, currentColor, position, id)
-        }), // 銀將
+        }),
+        /**
+         * 成銀
+         */
         P_SILVER({ color, currentColor, position, id ->
             PromotedSilver(color, currentColor, position, id)
-        }), // 成銀
+        }),
+        /**
+         * 桂馬
+         */
         KNIGHT({ color, currentColor, position, id ->
             Knight(color, currentColor, position, id)
-        }), // 桂馬
+        }),
+        /**
+         * 成桂
+         */
         P_KNIGHT({ color, currentColor, position, id ->
             PromotedKnight(color, currentColor, position, id)
-        }), // 成桂
+        }),
+        /**
+         * 香車
+         */
         LANCE({ color, currentColor, position, id ->
             Lance(color, currentColor, position, id)
-        }), // 香車
+        }),
+        /**
+         * 成香
+         */
         P_LANCE({ color, currentColor, position, id ->
             PromotedLance(color, currentColor, position, id)
-        }), // 成香
+        }),
+        /**
+         * 歩兵
+         */
         PAWN({ color, currentColor, position, id ->
             Pawn(color, currentColor, position, id)
-        }), // 歩兵
+        }),
+        /**
+         * と金
+         */
         P_PAWN({ color, currentColor, position, id ->
             PromotedPawn(color, currentColor, position, id)
-        }), // と金
+        }),
     }
 
     internal abstract val movablePositions: List<Position>
@@ -85,7 +133,7 @@ sealed class Piece(val type: Type) {
     internal open fun demote(): Piece? = null
 }
 
-data class King(
+internal data class King(
     override val color: Color,
     override val currentColor: Color,
     override val position: Position,
@@ -98,7 +146,7 @@ data class King(
             .minus(position)
 }
 
-data class Rook(
+internal data class Rook(
     override val color: Color,
     override val currentColor: Color,
     override val position: Position,
@@ -125,7 +173,7 @@ data class Rook(
     override fun promote(): Piece? = Dragon(color, currentColor, position, id)
 }
 
-data class Dragon(
+internal data class Dragon(
     override val color: Color,
     override val currentColor: Color,
     override val position: Position,
@@ -158,7 +206,7 @@ data class Dragon(
     override fun demote(): Piece? = Rook(color, currentColor, position, id)
 }
 
-data class Bishop(
+internal data class Bishop(
     override val color: Color,
     override val currentColor: Color,
     override val position: Position,
@@ -183,7 +231,7 @@ data class Bishop(
     override fun promote(): Piece? = Horse(color, currentColor, position, id)
 }
 
-data class Horse(
+internal data class Horse(
     override val color: Color,
     override val currentColor: Color,
     override val position: Position,
@@ -215,7 +263,7 @@ data class Horse(
     override fun demote(): Piece? = Bishop(color, currentColor, position, id)
 }
 
-sealed class GoldLike(type: Type) : Piece(type) {
+internal sealed class GoldLike(type: Type) : Piece(type) {
 
     override val movablePositions: List<Position>
         get() {
@@ -231,14 +279,14 @@ sealed class GoldLike(type: Type) : Piece(type) {
         }
 }
 
-data class Gold(
+internal data class Gold(
     override val color: Color,
     override val currentColor: Color,
     override val position: Position,
     override val id: Int
 ) : GoldLike(GOLD)
 
-data class Silver(
+internal data class Silver(
     override val color: Color,
     override val currentColor: Color,
     override val position: Position,
@@ -262,7 +310,7 @@ data class Silver(
     override fun promote(): Piece? = PromotedSilver(color, currentColor, position, id)
 }
 
-data class PromotedSilver(
+internal data class PromotedSilver(
     override val color: Color,
     override val currentColor: Color,
     override val position: Position,
@@ -272,7 +320,7 @@ data class PromotedSilver(
     override fun demote(): Piece? = Silver(color, currentColor, position, id)
 }
 
-data class Knight(
+internal data class Knight(
     override val color: Color,
     override val currentColor: Color,
     override val position: Position,
@@ -288,7 +336,7 @@ data class Knight(
     override fun promote(): Piece? = PromotedKnight(color, currentColor, position, id)
 }
 
-data class PromotedKnight(
+internal data class PromotedKnight(
     override val color: Color,
     override val currentColor: Color,
     override val position: Position,
@@ -298,7 +346,7 @@ data class PromotedKnight(
     override fun demote(): Piece? = Knight(color, currentColor, position, id)
 }
 
-data class Lance(
+internal data class Lance(
     override val color: Color,
     override val currentColor: Color,
     override val position: Position,
@@ -321,7 +369,7 @@ data class Lance(
     override fun promote(): Piece? = PromotedLance(color, currentColor, position, id)
 }
 
-data class PromotedLance(
+internal data class PromotedLance(
     override val color: Color,
     override val currentColor: Color,
     override val position: Position,
@@ -331,7 +379,7 @@ data class PromotedLance(
     override fun demote(): Piece? = Lance(color, currentColor, position, id)
 }
 
-data class Pawn(
+internal data class Pawn(
     override val color: Color,
     override val currentColor: Color,
     override val position: Position,
@@ -345,7 +393,7 @@ data class Pawn(
     override fun promote(): Piece? = PromotedPawn(color, currentColor, position, id)
 }
 
-data class PromotedPawn(
+internal data class PromotedPawn(
     override val color: Color,
     override val currentColor: Color,
     override val position: Position,

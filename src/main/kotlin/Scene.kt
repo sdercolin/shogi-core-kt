@@ -5,8 +5,16 @@ import com.sdercolin.shogicore.exception.IllegalOnBoardPositionException
 import com.sdercolin.shogicore.exception.IllegalPositionException
 import com.sdercolin.shogicore.exception.PieceNotExistingException
 
+/**
+ * Class describing the situation of the game at a certain timing
+ * @param pieces contains all the pieces in the scene
+ */
 data class Scene constructor(val pieces: List<Piece>) {
 
+    /**
+     * Returns the next scene if the given {@code Move} is conducted
+     * @throws IllegalMoveException when the given move cannot be conducted in the current scene
+     */
     fun take(move: Move): Scene {
         ensureMoveLegal(move)
         val piece = move.piece
@@ -23,6 +31,9 @@ data class Scene constructor(val pieces: List<Piece>) {
         return Scene(pieces = pieceList.toList())
     }
 
+    /**
+     * Result of the game in this scene
+     */
     val result: GameResult
         get() = TODO()
 
@@ -36,15 +47,26 @@ data class Scene constructor(val pieces: List<Piece>) {
         throw IllegalMoveException(move)
     }
 
-    fun getPossibleMoves(x: Int, y: Int): List<PossibleMove>? {
+    internal fun getPossibleMoves(x: Int, y: Int): List<PossibleMove>? {
         return getPossibleMoves(Position(x, y))
     }
 
-    fun getPossibleMoves(position: Position): List<PossibleMove>? {
-        if (!position.isOnBoard) throw IllegalOnBoardPositionException(position)
-        return getPieceOn(position)?.let { getPossibleMoves(it) }
+    /**
+     * Returns a list containing all the possible moves by the piece on the given {@code Position} on the board
+     * When there is not piece on the given point, {@code null} is returned
+     * @param onBoardPosition should be a point on the board
+     * @throws IllegalOnBoardPositionException when the given {@code Position} is not on the board
+     */
+    fun getPossibleMoves(onBoardPosition: Position): List<PossibleMove>? {
+        if (!onBoardPosition.isOnBoard) throw IllegalOnBoardPositionException(onBoardPosition)
+        return getPieceOn(onBoardPosition)?.let { getPossibleMoves(it) }
     }
 
+    /**
+     * Returns a list containing all the possible moves by the given {@code Piece}
+     * @param piece should be one of the item in {@code this.pieces}
+     * @throws PieceNotExistingException when the given piece is not exiting in this scene
+     */
     fun getPossibleMoves(piece: Piece): List<PossibleMove> {
         if (!pieces.contains(piece)) throw PieceNotExistingException(piece, this)
         return if (piece.position.isOnBoard) {
@@ -78,10 +100,10 @@ data class Scene constructor(val pieces: List<Piece>) {
     }
 
     companion object {
-        val empty: Scene
+        internal val empty: Scene
             get() = Scene(listOf())
 
-        val initial: Scene
+        internal val initial: Scene
             get() = Scene(
                 listOf(
                     King(Color.BLACK, Color.BLACK, Position(4, 8), 0),
