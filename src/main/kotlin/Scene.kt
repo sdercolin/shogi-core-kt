@@ -2,7 +2,6 @@ package com.sdercolin.shogicore
 
 import com.sdercolin.shogicore.exception.IllegalMoveException
 import com.sdercolin.shogicore.exception.IllegalOnBoardPositionException
-import com.sdercolin.shogicore.exception.IllegalPositionException
 import com.sdercolin.shogicore.exception.PieceNotExistingException
 
 /**

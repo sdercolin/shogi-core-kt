@@ -1,7 +1,6 @@
 package com.sdercolin.shogicore
 
 import com.sdercolin.shogicore.Piece.Type.*
-import com.sdercolin.shogicore.exception.IllegalPromotionException
 import com.sdercolin.shogicore.exception.UnreachablePositionException
 import kotlin.math.abs
 
