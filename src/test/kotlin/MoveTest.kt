@@ -1,4 +1,8 @@
-import com.sdercolin.shogicore.*
+import com.sdercolin.shogicore.Color
+import com.sdercolin.shogicore.Horse
+import com.sdercolin.shogicore.Pawn
+import com.sdercolin.shogicore.Position
+import com.sdercolin.shogicore.Scene
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test

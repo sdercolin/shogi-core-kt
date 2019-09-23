@@ -8,8 +8,7 @@ import com.sdercolin.shogicore.exception.IllegalPromotionException
  * @param target the target position to move to
  * @param promote if the piece should promotes after moving
  */
-data class Move(val piece: Piece, val target: Position, val promote: Boolean) {
-}
+data class Move(val piece: Piece, val target: Position, val promote: Boolean)
 
 /**
  * A class defining a possible move that can create a certain {@code Move}

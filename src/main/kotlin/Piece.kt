@@ -1,6 +1,19 @@
 package com.sdercolin.shogicore
 
-import com.sdercolin.shogicore.Piece.Type.*
+import com.sdercolin.shogicore.Piece.Type.BISHOP
+import com.sdercolin.shogicore.Piece.Type.DRAGON
+import com.sdercolin.shogicore.Piece.Type.GOLD
+import com.sdercolin.shogicore.Piece.Type.HORSE
+import com.sdercolin.shogicore.Piece.Type.KING
+import com.sdercolin.shogicore.Piece.Type.KNIGHT
+import com.sdercolin.shogicore.Piece.Type.LANCE
+import com.sdercolin.shogicore.Piece.Type.PAWN
+import com.sdercolin.shogicore.Piece.Type.P_KNIGHT
+import com.sdercolin.shogicore.Piece.Type.P_LANCE
+import com.sdercolin.shogicore.Piece.Type.P_PAWN
+import com.sdercolin.shogicore.Piece.Type.P_SILVER
+import com.sdercolin.shogicore.Piece.Type.ROOK
+import com.sdercolin.shogicore.Piece.Type.SILVER
 import com.sdercolin.shogicore.exception.UnreachablePositionException
 import kotlin.math.abs
 
