@@ -1,6 +1,6 @@
 package com.sdercolin.shogicore
 
-import com.sdercolin.shogicore.exception.IllegalPromotionException
+import com.sdercolin.shogicore.exception.InvalidPromotionException
 
 /**
  * A class defining a move that can be passed to an ongoing game
@@ -20,10 +20,10 @@ data class PossibleMove(val piece: Piece, val target: Position, val canPromote: 
 
     /**
      * Takes the decision of the player if to conduct a promotion and returns a confirmed {@code Move}
-     * @throws IllegalPromotionException when the desired promotion cannot be conducted
+     * @throws InvalidPromotionException when the desired promotion cannot be conducted
      */
     fun confirm(promote: Boolean): Move {
-        if (!canPromote && promote) throw IllegalPromotionException(this)
+        if (!canPromote && promote) throw InvalidPromotionException(this)
         return Move(piece, target, promote)
     }
 }

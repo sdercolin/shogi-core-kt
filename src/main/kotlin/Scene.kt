@@ -1,7 +1,7 @@
 package com.sdercolin.shogicore
 
 import com.sdercolin.shogicore.exception.InvalidMoveException
-import com.sdercolin.shogicore.exception.IllegalOnBoardPositionException
+import com.sdercolin.shogicore.exception.InvalidOnBoardPositionException
 import com.sdercolin.shogicore.exception.PieceNotExistingException
 
 /**
@@ -70,10 +70,10 @@ data class Scene constructor(val pieces: List<Piece>, val playingColor: Color) {
      * Returns a list containing all the possible moves by the piece on the given {@code Position} on the board
      * When there is not piece on the given point, {@code null} is returned
      * @param onBoardPosition should be a point on the board
-     * @throws IllegalOnBoardPositionException when the given {@code Position} is not on the board
+     * @throws InvalidOnBoardPositionException when the given {@code Position} is not on the board
      */
     fun getPossibleMoves(onBoardPosition: Position): List<PossibleMove>? {
-        if (!onBoardPosition.isOnBoard) throw IllegalOnBoardPositionException(onBoardPosition)
+        if (!onBoardPosition.isOnBoard) throw InvalidOnBoardPositionException(onBoardPosition)
         return getPieceOn(onBoardPosition)?.let { getPossibleMoves(it) }
     }
 
@@ -106,7 +106,7 @@ data class Scene constructor(val pieces: List<Piece>, val playingColor: Color) {
     }
 
     internal fun getPieceOn(position: Position): Piece? {
-        if (!position.isOnBoard) throw IllegalOnBoardPositionException(position)
+        if (!position.isOnBoard) throw InvalidOnBoardPositionException(position)
         return pieces.find { it.position == position }
     }
 
