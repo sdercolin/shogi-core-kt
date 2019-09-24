@@ -1,6 +1,6 @@
 package com.sdercolin.shogicore
 
-import com.sdercolin.shogicore.exception.IllegalMoveException
+import com.sdercolin.shogicore.exception.InvalidMoveException
 import com.sdercolin.shogicore.exception.IllegalOnBoardPositionException
 import com.sdercolin.shogicore.exception.PieceNotExistingException
 
@@ -13,7 +13,7 @@ data class Scene constructor(val pieces: List<Piece>, val playingColor: Color) {
 
     /**
      * Returns the next scene if the given {@code Move} is conducted
-     * @throws IllegalMoveException when the given move cannot be conducted in the current scene
+     * @throws InvalidMoveException when the given move cannot be conducted in the current scene
      */
     fun take(move: Move): Scene {
         ensureMoveLegal(move)
@@ -59,7 +59,7 @@ data class Scene constructor(val pieces: List<Piece>, val playingColor: Color) {
         if (possibleMove != null) {
             if (possibleMove.canPromote || !move.promote) return
         }
-        throw IllegalMoveException(move)
+        throw InvalidMoveException(move)
     }
 
     internal fun getPossibleMoves(x: Int, y: Int): List<PossibleMove>? {

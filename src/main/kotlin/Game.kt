@@ -1,7 +1,7 @@
 package com.sdercolin.shogicore
 
 import com.sdercolin.shogicore.exception.FinishedGameException
-import com.sdercolin.shogicore.exception.IllegalMoveException
+import com.sdercolin.shogicore.exception.InvalidMoveException
 import com.sdercolin.shogicore.exception.PieceNotExistingException
 
 /**
@@ -73,7 +73,7 @@ class Game() {
      * Conduct a move and return the next scene after the move it processed
      * @param move should be created by one of the item in the list returned
      * by {@code getPossibleMoves()} for the same scene
-     * @throws IllegalMoveException when the given move cannot be conducted in the current scene
+     * @throws InvalidMoveException when the given move cannot be conducted in the current scene
      * @throws FinishedGameException when the game has already finished
      */
     fun take(move: Move): Scene {
