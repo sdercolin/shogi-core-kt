@@ -20,8 +20,8 @@ data class Position(val x: Int, val y: Int) {
          */
         fun getHandPosition(color: Color): Position {
             return when (color) {
-                Color.BLACK -> Position(-1, 9)
-                Color.WHITE -> Position(9, -1)
+                Color.Black -> Position(-1, 9)
+                Color.White -> Position(9, -1)
             }
         }
 
@@ -40,17 +40,17 @@ data class Position(val x: Int, val y: Int) {
          * A list containing all the existing {@code Position}s
          */
         val all: List<Position>
-            get() = wholeBoard + getHandPosition(Color.BLACK) + getHandPosition(Color.WHITE)
+            get() = wholeBoard + getHandPosition(Color.Black) + getHandPosition(Color.White)
 
         internal fun getPromotableZone(color: Color): List<Position> {
             return when (color) {
-                Color.BLACK ->
+                Color.Black ->
                     (0..X_MAX).flatMap { x ->
                         (0 until WIDTH_PROMOTABLE_ZONE).map { y ->
                             Position(x, y)
                         }
                     }
-                Color.WHITE ->
+                Color.White ->
                     (0..X_MAX).flatMap { x ->
                         (X_MAX - WIDTH_PROMOTABLE_ZONE + 1..X_MAX).map { y ->
                             Position(x, y)

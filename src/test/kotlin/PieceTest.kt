@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test
 internal class PieceTest {
     @Test
     fun testKingMove1() {
-        val piece = King(Color.BLACK, Color.BLACK, Position(4, 0), 0)
+        val piece = King(Color.Black, Color.Black, Position(4, 0), 0)
         val expected = listOf(
             5 to 0,
             3 to 0,
@@ -36,7 +36,7 @@ internal class PieceTest {
 
     @Test
     fun testKingMove2() {
-        val piece = King(Color.BLACK, Color.BLACK, Position(0, 0), 0)
+        val piece = King(Color.Black, Color.Black, Position(0, 0), 0)
         val expected = listOf(
             1 to 0,
             0 to 1,
@@ -48,7 +48,7 @@ internal class PieceTest {
 
     @Test
     fun testKingMove3() {
-        val piece = King(Color.BLACK, Color.BLACK, Position(3, 3), 0)
+        val piece = King(Color.Black, Color.Black, Position(3, 3), 0)
         val expected = listOf(
             2 to 3,
             4 to 3,
@@ -65,7 +65,7 @@ internal class PieceTest {
 
     @Test
     fun testRookMove1() {
-        val piece = Rook(Color.BLACK, Color.BLACK, Position(0, 0), 0)
+        val piece = Rook(Color.Black, Color.Black, Position(0, 0), 0)
         val expectedMovablePositions = listOf(
             0 to 1,
             0 to 2,
@@ -100,7 +100,7 @@ internal class PieceTest {
 
     @Test
     fun testRookMove2() {
-        val piece = Rook(Color.BLACK, Color.BLACK, Position(4, 4), 0)
+        val piece = Rook(Color.Black, Color.Black, Position(4, 4), 0)
         val expectedMovablePositions = listOf(
             4 to 0,
             4 to 1,
@@ -139,7 +139,7 @@ internal class PieceTest {
 
     @Test
     fun testDragonMove1() {
-        val piece = Dragon(Color.BLACK, Color.BLACK, Position(0, 0), 0)
+        val piece = Dragon(Color.Black, Color.Black, Position(0, 0), 0)
         val expectedMovablePositions = listOf(
             0 to 1,
             0 to 2,
@@ -180,7 +180,7 @@ internal class PieceTest {
 
     @Test
     fun testDragonMove2() {
-        val piece = Dragon(Color.BLACK, Color.BLACK, Position(4, 4), 0)
+        val piece = Dragon(Color.Black, Color.Black, Position(4, 4), 0)
         val expectedMovablePositions = listOf(
             4 to 0,
             4 to 1,
@@ -223,7 +223,7 @@ internal class PieceTest {
 
     @Test
     fun testBishopMove1() {
-        val piece = Bishop(Color.BLACK, Color.BLACK, Position(0, 0), 0)
+        val piece = Bishop(Color.Black, Color.Black, Position(0, 0), 0)
         val expectedMovablePositions = listOf(
             1 to 1,
             2 to 2,
@@ -250,7 +250,7 @@ internal class PieceTest {
 
     @Test
     fun testBishopMove2() {
-        val piece = Bishop(Color.BLACK, Color.BLACK, Position(4, 4), 0)
+        val piece = Bishop(Color.Black, Color.Black, Position(4, 4), 0)
         val expectedMovablePositions = listOf(
             0 to 0,
             1 to 1,
@@ -283,7 +283,7 @@ internal class PieceTest {
 
     @Test
     fun testHorseMove() {
-        val piece = Horse(Color.BLACK, Color.BLACK, Position(4, 4), 0)
+        val piece = Horse(Color.Black, Color.Black, Position(4, 4), 0)
         val expectedMovablePositions = listOf(
             0 to 0,
             1 to 1,
@@ -326,11 +326,11 @@ internal class PieceTest {
     @Test
     fun testGoldLikeMove1() {
         val pieces = listOf(
-            Gold(Color.BLACK, Color.BLACK, Position(4, 4), 0),
-            PromotedKnight(Color.BLACK, Color.BLACK, Position(4, 4), 0),
-            PromotedLance(Color.BLACK, Color.BLACK, Position(4, 4), 0),
-            PromotedSilver(Color.BLACK, Color.BLACK, Position(4, 4), 0),
-            PromotedPawn(Color.BLACK, Color.BLACK, Position(4, 4), 0)
+            Gold(Color.Black, Color.Black, Position(4, 4), 0),
+            PromotedKnight(Color.Black, Color.Black, Position(4, 4), 0),
+            PromotedLance(Color.Black, Color.Black, Position(4, 4), 0),
+            PromotedSilver(Color.Black, Color.Black, Position(4, 4), 0),
+            PromotedPawn(Color.Black, Color.Black, Position(4, 4), 0)
         )
         val expectedMovablePositions = listOf(
             4 to 3,
@@ -349,11 +349,11 @@ internal class PieceTest {
     @Test
     fun testGoldLikeMove2() {
         val pieces = listOf(
-            Gold(Color.WHITE, Color.WHITE, Position(4, 4), 0),
-            PromotedKnight(Color.WHITE, Color.WHITE, Position(4, 4), 0),
-            PromotedLance(Color.WHITE, Color.WHITE, Position(4, 4), 0),
-            PromotedSilver(Color.WHITE, Color.WHITE, Position(4, 4), 0),
-            PromotedPawn(Color.WHITE, Color.WHITE, Position(4, 4), 0)
+            Gold(Color.White, Color.White, Position(4, 4), 0),
+            PromotedKnight(Color.White, Color.White, Position(4, 4), 0),
+            PromotedLance(Color.White, Color.White, Position(4, 4), 0),
+            PromotedSilver(Color.White, Color.White, Position(4, 4), 0),
+            PromotedPawn(Color.White, Color.White, Position(4, 4), 0)
         )
         val expectedMovablePositions = listOf(
             4 to 5,
@@ -371,7 +371,7 @@ internal class PieceTest {
 
     @Test
     fun testSilverMove1() {
-        val piece = Silver(Color.BLACK, Color.BLACK, Position(4, 4), 0)
+        val piece = Silver(Color.Black, Color.Black, Position(4, 4), 0)
         val expectedMovablePositions = listOf(
             4 to 3,
             3 to 3,
@@ -385,7 +385,7 @@ internal class PieceTest {
 
     @Test
     fun testSilverMove2() {
-        val piece = Silver(Color.BLACK, Color.WHITE, Position(4, 4), 0)
+        val piece = Silver(Color.Black, Color.White, Position(4, 4), 0)
         val expectedMovablePositions = listOf(
             4 to 5,
             3 to 5,
@@ -399,7 +399,7 @@ internal class PieceTest {
 
     @Test
     fun testKnightMove1() {
-        val piece = Knight(Color.BLACK, Color.BLACK, Position(4, 4), 0)
+        val piece = Knight(Color.Black, Color.Black, Position(4, 4), 0)
         val expectedMovablePositions = listOf(
             3 to 2,
             5 to 2
@@ -410,7 +410,7 @@ internal class PieceTest {
 
     @Test
     fun testKnightMove2() {
-        val piece = Knight(Color.BLACK, Color.BLACK, Position(4, 1), 0)
+        val piece = Knight(Color.Black, Color.Black, Position(4, 1), 0)
         val expectedMovablePositions = setOf<Position>()
         val actualMovablePositions = piece.movablePositions.toSet()
         assertEquals(expectedMovablePositions, actualMovablePositions)
@@ -418,7 +418,7 @@ internal class PieceTest {
 
     @Test
     fun testLanceMove() {
-        val piece = Lance(Color.BLACK, Color.BLACK, Position(4, 4), 0)
+        val piece = Lance(Color.Black, Color.Black, Position(4, 4), 0)
         val expectedMovablePositions = listOf(
             4 to 3,
             4 to 2,
@@ -431,7 +431,7 @@ internal class PieceTest {
 
     @Test
     fun testPawnMove() {
-        val piece = Pawn(Color.BLACK, Color.BLACK, Position(4, 4), 0)
+        val piece = Pawn(Color.Black, Color.Black, Position(4, 4), 0)
         val expectedMovablePositions = listOf(
             4 to 3
         ).map { Position(it.first, it.second) }.toSet()

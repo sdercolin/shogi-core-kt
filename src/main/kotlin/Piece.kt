@@ -27,7 +27,7 @@ sealed class Piece(val type: Type) {
     internal abstract val id: Int
 
     internal fun beTaken(): Piece {
-        val newColor = if (currentColor == Color.BLACK) Color.WHITE else Color.BLACK
+        val newColor = currentColor.next()
         val handPosition = Position.getHandPosition(newColor)
         val taken = type.instantiator(color, newColor, handPosition, id)
         return taken.demote() ?: taken
@@ -139,7 +139,7 @@ sealed class Piece(val type: Type) {
         if (!movablePositions.contains(position)) throw UnreachablePositionException(this, position)
     }
 
-    protected val upwardFactor get() = if (currentColor == Color.BLACK) -1 else 1
+    protected val upwardFactor get() = if (currentColor == Color.Black) -1 else 1
 
     internal open fun promote(): Piece? = null
     internal open fun demote(): Piece? = null

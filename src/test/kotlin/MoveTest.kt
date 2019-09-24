@@ -24,10 +24,10 @@ class MoveTest {
         assertNotNull(move2)
         val scene2 = scene1.take(move2!!)
 
-        val blackHandPieces = scene2.getPiecesOn(Position.getHandPosition(Color.BLACK))
+        val blackHandPieces = scene2.getPiecesOn(Position.getHandPosition(Color.Black))
         assertEquals(1, blackHandPieces.size)
         val takenPiece = blackHandPieces[0]
-        assert(takenPiece.color == Color.WHITE && takenPiece is Pawn)
+        assert(takenPiece.color == Color.White && takenPiece is Pawn)
 
         val newPiece = scene2.getPieceOn(Position(2, 2))
         assertNotNull(newPiece)

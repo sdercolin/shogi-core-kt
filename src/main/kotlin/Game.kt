@@ -26,8 +26,8 @@ import com.sdercolin.shogicore.exception.PieceNotExistingException
  * </pre>
  */
 class Game() {
-    private val firstPlayer = Player(Color.BLACK)
-    private val secondPlayer = Player(Color.WHITE)
+    private val firstPlayer = Player(Color.Black)
+    private val secondPlayer = Player(Color.White)
     private val records: MutableList<Pair<Scene, Move?>> = mutableListOf(Scene.empty to null)
 
     /**
@@ -50,16 +50,14 @@ class Game() {
     /**
      * Player who are suppose to conduct the next move
      */
-    var currentPlayer: Player = firstPlayer
-        private set
+    val currentPlayer: Player
+        get() = listOf(firstPlayer, secondPlayer).find { it.color == currentScene.playingColor }!!
 
     /**
      * A list containing all the pieces that are able to be moved by the current player as the next move
      */
     val movablePieces: List<Piece>
-        get() = currentScene.pieces
-            .filter { it.color == currentPlayer.color }
-            .filter { currentScene.getPossibleMoves(it).isNotEmpty() }
+        get() = currentScene.movablePieces
 
     /**
      * Returns all the options for the next move by the given piece
@@ -76,16 +74,11 @@ class Game() {
      * by {@code getPossibleMoves()} for the same scene
      * @throws IllegalMoveException when the given move cannot be conducted in the current scene
      */
-    fun take(move: Move): Scene {
-        currentPlayer =
-            if (currentPlayer == firstPlayer) secondPlayer
-            else firstPlayer
-
-        return currentScene.take(move).also {
+    fun take(move: Move): Scene =
+        currentScene.take(move).also {
             records.add(it to move)
             result = it.result
         }
-    }
 
     /**
      * Finish the game with one of the players giving up the game
