@@ -43,7 +43,9 @@ class Game() {
     /**
      * Result of the game at present
      */
-    val result: GameResult get() = currentScene.result
+    var result: GameResult = GameResult.InGame
+        private set
+
 
     /**
      * Player who are suppose to conduct the next move
@@ -81,6 +83,16 @@ class Game() {
 
         return currentScene.take(move).also {
             records.add(it to move)
+            result = it.result
+        }
+    }
+
+    /**
+     * Finish the game with one of the players giving up the game
+     */
+    fun resign(): GameResult.Resignation {
+        return GameResult.Resignation(currentPlayer.color).also {
+            result = it
         }
     }
 }
